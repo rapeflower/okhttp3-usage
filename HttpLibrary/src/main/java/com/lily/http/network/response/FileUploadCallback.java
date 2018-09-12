@@ -4,8 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.lily.http.network.exception.OkHttpException;
-import com.lily.http.network.listener.DisposeDataHandle;
-import com.lily.http.network.listener.DisposeDataListener;
+import com.lily.http.network.listener.DataProcessor;
+import com.lily.http.network.listener.ProcessorListener;
 import com.lily.http.network.utils.JsonHelper;
 
 import java.io.IOException;
@@ -19,14 +19,14 @@ import okhttp3.Response;
  * @Date 2017-03-15 16:48
  * @Describe 文件上传
  */
-public class FileUploadCallback implements Callback{
+public class FileUploadCallback implements Callback {
 
     protected final int NETWORK_ERROR = -1; //网络错误
     private Handler mHandler;
-    private DisposeDataListener mListener;
+    private ProcessorListener mListener;
 
-    public FileUploadCallback(DisposeDataHandle handle) {
-        this.mListener = handle.listener;
+    public FileUploadCallback(DataProcessor dataProcessor) {
+        this.mListener = dataProcessor.listener;
         mHandler = new Handler(Looper.getMainLooper());
     }
 

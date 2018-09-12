@@ -1,7 +1,7 @@
 package com.lily.http.network.client;
 
-import com.lily.http.network.listener.DisposeDataHandle;
-import com.lily.http.network.listener.DisposeDataListener;
+import com.lily.http.network.listener.DataProcessor;
+import com.lily.http.network.listener.ProcessorListener;
 import com.lily.http.network.request.BuildRequest;
 import com.lily.http.network.request.RequestParams;
 import com.lily.http.network.response.FileDownloadCallback;
@@ -51,10 +51,10 @@ public class RequestManager {
      * @param dataListener
      * @param clazz
      */
-    public static void get(String url, RequestParams params, DisposeDataListener dataListener, Class<?> clazz) {
+    public static void get(String url, RequestParams params, ProcessorListener dataListener, Class<?> clazz) {
         checkInit();
         XOkHttpClient.sendRequest(BuildRequest.createGetRequest(url, params),
-                new JsonCallback(new DisposeDataHandle(dataListener, clazz)));
+                new JsonCallback(new DataProcessor(dataListener, clazz)));
     }
 
     /**
@@ -64,10 +64,10 @@ public class RequestManager {
      * @param params
      * @param dataListener
      */
-    public static void post(String url, RequestParams params, DisposeDataListener dataListener, Class<?> clazz) {
+    public static void post(String url, RequestParams params, ProcessorListener dataListener, Class<?> clazz) {
         checkInit();
         XOkHttpClient.sendRequest(BuildRequest.createPostRequest(url, params),
-                new JsonCallback(new DisposeDataHandle(dataListener, clazz)));
+                new JsonCallback(new DataProcessor(dataListener, clazz)));
     }
 
     /**
@@ -77,10 +77,10 @@ public class RequestManager {
      * @param params
      * @param dataListener
      */
-    public static void uploadFile(String url, RequestParams params, DisposeDataListener dataListener) {
+    public static void uploadFile(String url, RequestParams params, ProcessorListener dataListener) {
         checkInit();
         XOkHttpClient.sendRequest(BuildRequest.createMultiPostRequest(url, params),
-                new FileUploadCallback(new DisposeDataHandle(dataListener)));
+                new FileUploadCallback(new DataProcessor(dataListener)));
     }
 
     /**
@@ -91,11 +91,11 @@ public class RequestManager {
      * @param dataListener
      * @param savePath 文件下载保存路径
      */
-    public static void downloadFile(String url, RequestParams params, DisposeDataListener dataListener, String savePath) {
+    public static void downloadFile(String url, RequestParams params, ProcessorListener dataListener, String savePath) {
         checkInit();
         //文件下载用GET请求
         XOkHttpClient.sendRequest(BuildRequest.createGetRequest(url, params),
-                new FileDownloadCallback(new DisposeDataHandle(dataListener, savePath)));
+                new FileDownloadCallback(new DataProcessor(dataListener, savePath)));
     }
 
 }

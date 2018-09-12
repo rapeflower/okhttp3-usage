@@ -5,8 +5,8 @@ import android.os.Looper;
 
 import com.lily.http.network.client.BuildConfig;
 import com.lily.http.network.exception.OkHttpException;
-import com.lily.http.network.listener.DisposeDataHandle;
-import com.lily.http.network.listener.DisposeDataListener;
+import com.lily.http.network.listener.DataProcessor;
+import com.lily.http.network.listener.ProcessorListener;
 import com.lily.http.network.utils.JsonHelper;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import okhttp3.Response;
  * @Date 2017-03-15 14:38
  * @Describe 处理请求响应的Json数据
  */
-public class JsonCallback implements Callback{
+public class JsonCallback implements Callback {
 
     protected final String RESULT_CODE = "error_code"; // 有返回则对于http请求来说是成功的，但还有可能是业务逻辑上的错误
     protected final int RESULT_CODE_VALUE = 0;
@@ -32,12 +32,12 @@ public class JsonCallback implements Callback{
     protected final int OTHER_ERROR = -3; //未知的错误
 
     private Handler mHandler;
-    private DisposeDataListener mListener;
+    private ProcessorListener mListener;
     private Class<?> mClass;
 
-    public JsonCallback(DisposeDataHandle handle) {
-        this.mListener = handle.listener;
-        this.mClass = handle.cls;
+    public JsonCallback(DataProcessor dataProcessor) {
+        this.mListener = dataProcessor.listener;
+        this.mClass = dataProcessor.cls;
         this.mHandler = new Handler(Looper.getMainLooper());
     }
 
