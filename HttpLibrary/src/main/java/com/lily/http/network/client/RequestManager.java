@@ -29,7 +29,7 @@ public class RequestManager {
      * @param headers
      */
     public static void init(Map<String, String> headers, boolean isDebug) {
-        BuildConfig.setDebug(isDebug);
+        OkConfig.setDebug(isDebug);
         XOkHttpClient.initConfig(headers);
         isInit = true;
     }

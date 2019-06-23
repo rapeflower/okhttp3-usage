@@ -3,7 +3,7 @@ package com.lily.http.network.response;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.lily.http.network.client.BuildConfig;
+import com.lily.http.network.client.OkConfig;
 import com.lily.http.network.exception.OkHttpException;
 import com.lily.http.network.listener.DataProcessor;
 import com.lily.http.network.listener.ProcessorListener;
@@ -81,14 +81,14 @@ public class JsonCallback implements Callback {
      * @param response
      */
     private Object handleResponse(Response response) {
-        if (response == null) {
+        if (response == null || !response.isSuccessful()) {
             return null;
         }
 
         Object obj = null;
         try {
             final String result = response.body().string();
-            if (BuildConfig.isDebug()) {
+            if (OkConfig.isDebug()) {
                 android.util.Log.w("Debug mode" , "result = " + result);
             }
             if (mClass == null) {

@@ -49,7 +49,7 @@ public class XOkHttpClient {
         /****** 添加请求头拦截器 ******/
         okHttpClientBuilder.addInterceptor(new HeaderInterceptor(headers));
         /****** 添加日志显示拦截器 ******/
-        if (BuildConfig.isDebug()) {
+        if (OkConfig.isDebug()) {
             okHttpClientBuilder.addInterceptor(new LoggerInterceptor());
         }
 
